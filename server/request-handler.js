@@ -12,6 +12,12 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 var obj = { results: [] };
+var fs = require('fs');
+
+// var messages = require('./messages.js');
+// var loggedMessages = messages.loggedMessages;
+// console.log(loggedMessages)
+
 
 exports.requestHandler = function(request, response, body) {
   // Request and Response come from node's http module.
@@ -53,14 +59,33 @@ exports.requestHandler = function(request, response, body) {
     response.writeHead(201, headers);
 
     request.on('data', function(chunk) {
-      obj['results'].push(JSON.parse(chunk.toString('utf8')));
+      var message = JSON.parse(chunk.toString('utf8'));
+      obj['results'].push(message);
+      console.log('obj:', obj);
+      fs.appendFile('./messages.js', JSON.stringify(message)+',', function() {
+        console.log('Appended file');
+      });
     });
 
     response.end(JSON.stringify(obj));
 
   } else {
-    response.writeHead(200, headers);
-    response.end(JSON.stringify(obj));
+    // var messageToSend = loggedMessages.split(',');
+    // console.log('messageToSend', messageToSend.length);
+
+    fs.readFile('./messages.js', function (err,data) {
+      if(err) console.log(err);
+      var messageList = data.toString('utf8')
+                            .split('\n')
+                            .map(function(item) {
+                              return JSON.parse(item);
+                            });
+      var obj= {results: messageList}
+      response.writeHead(200, headers);
+      response.end(JSON.stringify(obj));
+
+    });
+
   }
 
 
