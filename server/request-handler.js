@@ -31,62 +31,38 @@ exports.requestHandler = function(request, response, body) {
   // console.log('what is body', body);
   console.log("Serving request type " + request.method + " for url " + request.url);
 
-
-  // console.log('what is request',request);
-
-  // The outgoing status.
-  // var statusCode = 200;
-
   // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
 
-  // Tell the client we are sending them plain text.
-  //
-  // You will need to change this if you are sending something
-  // other than plain text, like JSON or HTML.
   headers['Content-Type'] = "application/json";
-
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
-  // response.writeHead(statusCode, headers);
-  console.log('request.url value: ', request.url);
+
+  //If the url doesn't exist, then serve a 404
   if ( request.url !== '/classes/messages') {
-    console.log('getting stuck at 404');
     response.writeHead(404);
     response.end();
   }
-  //*********example from online website
+
+  //Handling different types of requests:
   if(request.method === 'OPTIONS') {
-    console.log('options response');
      response.writeHead(200, headers);
-     response.end(JSON.stringify({ results: []  }));
-
+     response.end(JSON.stringify(obj));
   } else if (request.method === 'POST') {
-    //console.log('post response');
-
-    // pipe the request data to the console
-    // request.pipe(process.stdout);
-    // var obj = {results: []};
-
-    // pipe the request data to the response to view on the web
     response.writeHead(201, headers);
 
     request.on('data', function(chunk) {
-      console.log("Received body data:", JSON.parse(chunk.toString('utf8')));
       obj['results'].push(JSON.parse(chunk.toString('utf8')));
-
     });
+
     response.end(JSON.stringify(obj));
 
   } else {
-    console.log('everything else response');
-    // for GET requests, serve up the contents in 'index.html'
     response.writeHead(200, headers);
     response.end(JSON.stringify(obj));
   }
 
-  ///*************
 
   // Make sure to always call response.end() - Node may not send
   // anything back to the client until you do. The string you pass to
@@ -95,7 +71,6 @@ exports.requestHandler = function(request, response, body) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  //response.end(JSON.stringify({ a: 1 }));
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).
