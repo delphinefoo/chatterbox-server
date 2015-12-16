@@ -1,4 +1,3 @@
-// exports.basicServer= function () {
 
   /* Import node's http module: */
   var http = require("http");
@@ -41,4 +40,3 @@
   // possibility of serving more requests. To stop your server, hit
   // Ctrl-C on the command line.
 
-// }

@@ -12,10 +12,12 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 
-// var messages = require('./messages.js');
-// var loggedMessages = messages.loggedMessages;
-// console.log(loggedMessages)
-
+var defaultCorsHeaders = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "access-control-allow-headers": "content-type, accept",
+  "access-control-max-age": 10 // Seconds.
+};
 
 module.exports = function(request, response, body) {
   var obj = { results: [] };
@@ -61,9 +63,7 @@ module.exports = function(request, response, body) {
     request.on('data', function(chunk) {
       var message = JSON.parse(chunk.toString('utf8'));
       obj['results'].push(message);
-      console.log('obj:', obj);
       fs.appendFile('./messages.js', JSON.stringify(message)+'\n', function() {
-        console.log('Appended file');
       });
     });
 
@@ -71,7 +71,6 @@ module.exports = function(request, response, body) {
 
   } else {
     // var messageToSend = loggedMessages.split(',');
-    // console.log('messageToSend', messageToSend.length);
 
     fs.readFile('./messages.js', function (err,data) {
       if(err) console.log(err);
@@ -111,10 +110,5 @@ module.exports = function(request, response, body) {
 //
 // Another way to get around this restriction is to serve you chat
 // client from this domain by setting up static file serving.
-var defaultCorsHeaders = {
-  "access-control-allow-origin": "*",
-  "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "access-control-allow-headers": "content-type, accept",
-  "access-control-max-age": 10 // Seconds.
-};
+
 
