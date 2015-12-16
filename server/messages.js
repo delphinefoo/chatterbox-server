@@ -1,8 +1,4 @@
-{"username":"kat","text":"hey there","roomname":"Main room"}
-{"username":"kat","text":"blah","roomname":"Main room"}
-{"username":"kat","text":"have a nice day","roomname":"Main room"}
-{"username":"Delphine","text":"hi there","roomname":"Main room"}
-{"username":"Delphine","text":"hi there","roomname":"Main room"}
-{"username":"Taylor","text":"what's up","roomname":"Main room"}
-{"username":"kat","text":"hey there","roomname":"Main room"}
-{"username":"kat","text":"blah","roomname":"Main room"}
+{"username":"Delphine","text":"Messages!","roomname":"Main room"}
+{"username":"Delphine","text":" MOre!","roomname":"Main room"}
+{"username":"Delphine","text":"and more!","roomname":"Main room"}
+{"username":"Delphine","text":"turtle","roomname":"Main room"}
