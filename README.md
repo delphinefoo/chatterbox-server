@@ -1,2 +1,2 @@
-su# Chatterbox Server
+# Chatterbox Server
 A simple chat API server built with node.js. Chattterbox Server is an API server buit with node.js that replaces the Parse API from the prior [Chatterbox Client](https://github.com/delphinefoo/chatterbox-client) project. I completed this project as a student at Hack Reactor.
